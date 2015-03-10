@@ -13,8 +13,8 @@ List netrc entries:
 
 ```sh
 $ netrc list
-api.heroku.com 1234...
-github.com 1234...
+api.heroku.com user@heroku.com
+github.com user@github.com
 ```
 
 Show a password for a machine entry:
