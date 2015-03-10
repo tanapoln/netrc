@@ -13,6 +13,7 @@ import (
 const (
 	ErrInvalidCommand = iota
 	ErrInvalidNetrc
+	ErrMachineNotFound
 )
 
 func main() {
@@ -85,7 +86,12 @@ func passwordCommand(c *cli.Context) {
 
 	machine, err := netrc.FindMachine(netrcFile, filter)
 	if err != nil {
-		exit(c, ErrInvalidNetrc)
+		if err.Error() == "no machine found" {
+			fmt.Printf("%s does not contain %s\n", netrcFile, filter)
+			os.Exit(ErrMachineNotFound)
+		} else {
+			exit(c, ErrInvalidNetrc)
+		}
 	}
 
 	printMachines([]*netrc.Machine{machine}, true)
