@@ -20,6 +20,8 @@ func main() {
 	app := cli.NewApp()
 	app.Name = "netrc"
 	app.Usage = "Manage your netrc file."
+	app.Author = "naaman@heroku.com"
+	app.Version = "0.0.1"
 	app.Flags = []cli.Flag{
 		cli.StringFlag{
 			Name:  "netrc-path",
@@ -41,7 +43,13 @@ func main() {
 			Action:    passwordCommand,
 		},
 	}
+	app.CommandNotFound = func(c *cli.Context, cmd string) {
+		fmt.Println(app.Usage)
+		os.Exit(ErrInvalidCommand)
+	}
+	app.Action = listCommand
 
+	app.EnableBashCompletion = true
 	app.Run(os.Args)
 }
 
@@ -69,7 +77,7 @@ func listCommand(c *cli.Context) {
 func passwordCommand(c *cli.Context) {
 	filter, machines := cmdSetup(c)
 	if filter == "" {
-		fmt.Println("Provide a machine name.")
+		fmt.Println(c.Command.Usage)
 		os.Exit(ErrInvalidCommand)
 	}
 	printMachines(machines, filter, true)
