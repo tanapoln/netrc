@@ -1,7 +1,6 @@
 package main
 
 import (
-	"flag"
 	"fmt"
 	"os"
 	"os/user"
@@ -44,8 +43,7 @@ func main() {
 		},
 	}
 	app.CommandNotFound = func(c *cli.Context, cmd string) {
-		fmt.Println(app.Usage)
-		os.Exit(ErrInvalidCommand)
+		exit(c, ErrInvalidCommand)
 	}
 	app.Action = listCommand
 
@@ -70,33 +68,37 @@ func (m formattableMachine) Print() {
 }
 
 func listCommand(c *cli.Context) {
-	filter, machines := cmdSetup(c)
-	printMachines(machines, filter, false)
+	filter, netrcFile := cmdSetup(c)
+	machines, _, err := netrc.ParseFile(netrcFile)
+	if err != nil {
+		exit(c, ErrInvalidNetrc)
+	}
+
+	printMachines(filterMachines(machines, filter), false)
 }
 
 func passwordCommand(c *cli.Context) {
-	filter, machines := cmdSetup(c)
+	filter, netrcFile := cmdSetup(c)
 	if filter == "" {
-		fmt.Println(c.Command.Usage)
-		os.Exit(ErrInvalidCommand)
+		exit(c, ErrInvalidCommand)
 	}
-	printMachines(machines, filter, true)
-}
 
-func cmdSetup(c *cli.Context) (string, []*netrc.Machine) {
-	filter := c.Args().First()
-	machines, _, err := netrc.ParseFile(c.GlobalString("netrc-path"))
+	machine, err := netrc.FindMachine(netrcFile, filter)
 	if err != nil {
-		flag.Usage()
-		os.Exit(ErrInvalidNetrc)
+		exit(c, ErrInvalidNetrc)
 	}
-	return filter, machines
+
+	printMachines([]*netrc.Machine{machine}, true)
 }
 
-func printMachines(machines []*netrc.Machine, filter string, showPw bool) {
+func cmdSetup(c *cli.Context) (filter, netrcPath string) {
+	return c.Args().First(), c.GlobalString("netrc-path")
+}
+
+func printMachines(machines []*netrc.Machine, showPw bool) {
 	printNewLine := false
 
-	for _, m := range filterMachines(machines, filter) {
+	for _, m := range machines {
 		if printNewLine {
 			fmt.Println()
 		}
@@ -127,4 +129,9 @@ func defaultNetrc() string {
 		}
 	}
 	return ""
+}
+
+func exit(c *cli.Context, e int) {
+	cli.ShowAppHelp(c)
+	os.Exit(e)
 }
