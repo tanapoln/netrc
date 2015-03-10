@@ -2,11 +2,12 @@ package main
 
 import (
 	"flag"
-	"code.google.com/p/go-netrc/netrc"
-	"os"
 	"fmt"
+	"os"
 	"os/user"
 	"strings"
+
+	"code.google.com/p/go-netrc/netrc"
 	"github.com/codegangsta/cli"
 )
 
@@ -19,25 +20,25 @@ func main() {
 	app := cli.NewApp()
 	app.Name = "netrc"
 	app.Usage = "Manage your netrc file."
-	app.Flags = []cli.Flag {
-		cli.StringFlag {
-			Name: "netrc-path",
+	app.Flags = []cli.Flag{
+		cli.StringFlag{
+			Name:  "netrc-path",
 			Value: defaultNetrc(),
 			Usage: "Path to the netrc file",
 		},
 	}
-	app.Commands = []cli.Command {
+	app.Commands = []cli.Command{
 		{
-			Name: "list",
+			Name:      "list",
 			ShortName: "l",
-			Usage: "List netrc entries.",
-			Action: listCommand,
+			Usage:     "List netrc entries.",
+			Action:    listCommand,
 		},
 		{
-			Name: "password",
+			Name:      "password",
 			ShortName: "p",
-			Usage: "Show password for a machine.",
-			Action: passwordCommand,
+			Usage:     "Show password for a machine.",
+			Action:    passwordCommand,
 		},
 	}
 
@@ -97,7 +98,7 @@ func printMachines(machines []*netrc.Machine, filter string, showPw bool) {
 	}
 }
 
-func filterMachines(machines []*netrc.Machine, filter string) ([]*netrc.Machine) {
+func filterMachines(machines []*netrc.Machine, filter string) []*netrc.Machine {
 	var filteredMachines []*netrc.Machine
 	if filter == "" {
 		return machines
