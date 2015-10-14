@@ -47,11 +47,11 @@ $ netrc -p -n api.heroku.com
 Bash
 
 ```sh
-source etc/netrc_bash_completion
+source etc/netrc_bash_autocomplete	
 ```
 
 ZSH
 
 ```sh
-source etc/netrc_zsh_completion
+source etc/netrc_zsh_autocomplete
 ```
