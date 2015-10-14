@@ -39,3 +39,19 @@ Show a password for a machine entry:
 $ netrc -p -n api.heroku.com
 1234...
 ```
+
+### Experimental Completion
+
+"It works on my machine"
+
+Bash
+
+```sh
+source etc/netrc_bash_completion
+```
+
+ZSH
+
+```sh
+source etc/netrc_zsh_completion
+```
