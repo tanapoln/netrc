@@ -57,8 +57,8 @@ type formattableMachine struct {
 }
 
 type machineFormat struct {
-	showMachine bool
-	showLogin bool
+	showMachine  bool
+	showLogin    bool
 	showPassword bool
 }
 
@@ -99,8 +99,8 @@ func listCommand(c *cli.Context) {
 
 func machineCompletion(c *cli.Context) {
 	mf := &machineFormat{
-		showMachine: true,
-		showLogin: false,
+		showMachine:  true,
+		showLogin:    false,
 		showPassword: false,
 	}
 	listMachines(c, mf)
