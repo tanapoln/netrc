@@ -12,14 +12,30 @@ $ go get github.com/naaman/netrc
 List netrc entries:
 
 ```sh
-$ netrc list
+$ netrc
+api.heroku.com
+github.com
+```
+
+Show logins:
+
+```sh
+$ netrc -l
 api.heroku.com user@heroku.com
 github.com user@github.com
+```
+
+Show passwords:
+
+```sh
+$ netrc -p
+api.heroku.com 1234...
+github.com 1234...
 ```
 
 Show a password for a machine entry:
 
 ```sh
-$ netrc password api.heroku.com
+$ netrc -p -n api.heroku.com
 1234...
 ```
