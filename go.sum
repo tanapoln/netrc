@@ -1,0 +1,4 @@
+github.com/codegangsta/cli v1.5.1-0.20150310153555-012696c9b0ef h1:e+p/AJbtmdKytl0Q9+Yl6m69gu6zdl+0f4pWzMz3McU=
+github.com/codegangsta/cli v1.5.1-0.20150310153555-012696c9b0ef/go.mod h1:/qJNoX69yVSKu5o4jLyXAENLRyk1uhi7zkbQ3slBdOA=
+github.com/fhs/go-netrc v1.0.0 h1:jbXXfpcwkeNHq5lXXXQO9DTWD7wUqWxgnyPKUe5H4I0=
+github.com/fhs/go-netrc v1.0.0/go.mod h1:tGgE+SHFQhgo1jg+hG6/uCxBJv5Pnq7pTMjvaEWrOu8=

@@ -6,8 +6,8 @@ import (
 	"os/user"
 	"strings"
 
-	"code.google.com/p/go-netrc/netrc"
 	"github.com/codegangsta/cli"
+	"github.com/fhs/go-netrc/netrc"
 )
 
 const (
